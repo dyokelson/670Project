@@ -2,7 +2,8 @@
 title: "670 Project - Happiness in the Time of Covid"
 output: html_notebook
 ---
-HOW TO:
+HOW TO: (can delete this later once we get the hang of it)
+
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
@@ -13,7 +14,8 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
-* Begin Project Stuff * 
+### Begin Project Stuff 
+
 Load the libraries we need for the project:
 ```{r}
 library(ggplot2)
