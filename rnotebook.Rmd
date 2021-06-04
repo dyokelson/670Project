@@ -16,20 +16,35 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 
 ### Begin Project Stuff 
 
+The three Kaggle datasets we used are at the following URLS:
+https://www.kaggle.com/tunguz/data-on-covid19-coronavirus?select=owid-covid-data.csv
+https://www.kaggle.com/ajaypalsinghlo/world-happiness-report-2021
+https://www.kaggle.com/unsdsn/world-happiness
+
 Load the libraries we need for the project:
 ```{r}
 library(ggplot2)
 library(tidyr)
+library(readr)
 ```
 
 Load the datasets:
 
 ```{r}
+happiness_2015 <- read_csv("2015.csv")
+happiness_2016 <- read_csv("2016.csv")
+happiness_2017 <- read_csv("2017.csv")
+happiness_2018 <- read_csv("2018.csv")
+happiness_2019 <- read_csv("2019.csv")
+happiness_2021 <- read_csv("world-happiness-report-2021.csv")
 
+# covid2020 <- read_csv("owid-covid-data.csv")
+
+# covid2020_filtered <- read_excel("Documents/2021spring/670 Data Science/project/covid2020-filtered.xlsx")
 ```
 
 Start doing stuff with the data:
 ```{r}
-
+show(Happiness_2017)
 ```
 
