@@ -26,7 +26,7 @@ Load the libraries we need for the project:
 library(ggplot2)
 library(tidyr)
 library(dplyr)
-install.packages('gtools')
+#install.packages('gtools')
 library(gtools)
 #library(readr)
 ```
@@ -146,10 +146,11 @@ cv.error.10.free$delta
 
 
 ```{r}
+set.seed(8)
 # fit a linear model with multiple predictors in response to happiness score using K-fold cross validation.
-glm.score = glm(Happiness.Score ~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom, data = happiness)
-cv.error.10.free =cv.glm(happiness, glm.score.free, K=10)
-cv.error = cv.glm(happiness, glm.score, K=10)
-cv.error
+glm.score.multi = glm(Happiness.Score ~ GDP.per.capita +  Healthy.life.expectancy + Freedom, data = happiness)
+cv.error.5.multi =cv.glm(happiness, glm.score.multi, K=5)
+#cv.error = cv.glm(happiness, glm.score.multi, K=5)
+cv.error.5.multi
 ```
 
