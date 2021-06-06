@@ -145,5 +145,11 @@ cv.error.10.free$delta
 ```
 
 
-
+```{r}
+# fit a linear model with multiple predictors in response to happiness score using K-fold cross validation.
+glm.score = glm(Happiness.Score ~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom, data = happiness)
+cv.error.10.free =cv.glm(happiness, glm.score.free, K=10)
+cv.error = cv.glm(happiness, glm.score, K=10)
+cv.error
+```
 
