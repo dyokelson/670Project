@@ -26,6 +26,8 @@ Load the libraries we need for the project:
 library(ggplot2)
 library(tidyr)
 library(dplyr)
+install.packages('gtools')
+library(gtools)
 #library(readr)
 ```
 
@@ -43,6 +45,11 @@ happiness_2021 <- read.csv("data/world-happiness-report-2021.csv",header=T,na.st
 covid2020 <- read.csv("data/owid-covid-data.csv",header=T,na.strings="?")
 
 # covid2020_filtered <- read_excel("Documents/2021spring/670 Data Science/project/covid2020-filtered.xlsx")
+```
+
+
+```{r}
+
 ```
 
 Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, "Country" vs "Country or Region" or "Score" vs. "Happiness Score" we started doing this programatically but it was pretty tedious code to write and look at so we wanted to take it out of the notebook, we left one example, changing the country column name just as an example )
@@ -65,6 +72,10 @@ colnames(happiness_2018)[2] <- "Country"
 names(happiness_2018)
 colnames(happiness_2019)[2] <- "Country"
 names(happiness_2019)
+
+happiness_2015 = subset(happiness_2015, select=-c(Region,Standard.Error,Dystopia.Residual))
+happiness_2016 = subset(happiness_2016,select=-c(Region,Lower.Confidence.Interval,Upper.Confidence.Interval,Dystopia.Residual))
+happiness_2017 = subset(happiness_2017, select=-c(Whisker.high,Whisker.low,Dystopia.Residual))
 ```
 ### Add a "Year" Column to each to keep track before merging.
 ```{r}
@@ -78,11 +89,11 @@ happiness_2019$Year=2019
 
 ```{r}
 # Combine 2015-2019 happiness data into one dataframe
-happiness_1 = inner_join(happiness_2015, happiness_2016, happiness_2017, by="Country")
-happiness_2 = inner_join(happiness_2018, happiness_2019, by="Country")
-#happiness_3 = inner_join(happiness_2, happiness_2018, by="Country")
-#happiness = inner_join(happiness_3, happiness_2019, by="Country")
-names(happiness_1)
-names(happiness_2)
+happiness = smartbind(happiness_2015, happiness_2016, happiness_2017, happiness_2018, happiness_2019)
+dim(happiness)
+names(happiness)
+```
+```{r}
+names(covid2020)
 ```
 

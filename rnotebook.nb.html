@@ -227,25 +227,26 @@ pre code {
 <p>Load the libraries we need for the project:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeSh0aWR5cilcbmxpYnJhcnkoZHBseXIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeSh0aWR5cilcbmxpYnJhcnkoZHBseXIpXG5pbnN0YWxsLnBhY2thZ2VzKCdndG9vbHMnKVxuYGBgIn0= -->
 <pre class="r"><code>library(ggplot2)
 library(tidyr)
-library(dplyr)</code></pre>
+library(dplyr)
+install.packages(&#39;gtools&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
-<pre><code>
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoidHJ5aW5nIFVSTCAnaHR0cHM6Ly9jcmFuLnJzdHVkaW8uY29tL2Jpbi9tYWNvc3gvY29udHJpYi80LjAvZ3Rvb2xzXzMuOC4yLnRneidcbkNvbnRlbnQgdHlwZSAnYXBwbGljYXRpb24veC1nemlwJyBsZW5ndGggMzI0NTg4IGJ5dGVzICgzMTYgS0IpXG49PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PVxuZG93bmxvYWRlZCAzMTYgS0JcbiJ9 -->
+<pre><code>trying URL &#39;https://cran.rstudio.com/bin/macosx/contrib/4.0/gtools_3.8.2.tgz&#39;
+Content type &#39;application/x-gzip&#39; length 324588 bytes (316 KB)
+==================================================
+downloaded 316 KB</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2xpYnJhcnkocmVhZHIpXG5gYGAifQ== -->
-<pre class="r"><code>#library(readr)</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiXG5UaGUgZG93bmxvYWRlZCBiaW5hcnkgcGFja2FnZXMgYXJlIGluXG5cdC92YXIvZm9sZGVycy84cC9zdmp6OGxzNTNwNTgzYzA0bGpwejMxNmMwMDAwZ24vVC8vUnRtcEU3UnkwRy9kb3dubG9hZGVkX3BhY2thZ2VzXG4ifQ== -->
+<pre><code>
+The downloaded binary packages are in
+    /var/folders/8p/svjz8ls53p583c04ljpz316c0000gn/T//RtmpE7Ry0G/downloaded_packages</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShndG9vbHMpXG4jbGlicmFyeShyZWFkcilcbmBgYCJ9 -->
+<pre class="r"><code>library(gtools)
+#library(readr)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -264,6 +265,10 @@ covid2020 &lt;- read.csv(&quot;data/owid-covid-data.csv&quot;,header=T,na.string
 
 # covid2020_filtered &lt;- read_excel(&quot;Documents/2021spring/670 Data Science/project/covid2020-filtered.xlsx&quot;)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, “Country” vs “Country or Region” or “Score” vs. “Happiness Score” we started doing this programatically but it was pretty tedious code to write and look at so we wanted to take it out of the notebook, we left one example, changing the country column name just as an example )</p>
@@ -354,8 +359,8 @@ covid2020 &lt;- read.csv(&quot;data/owid-covid-data.csv&quot;,header=T,na.string
 <pre class="r"><code>colnames(happiness_2018)[2] &lt;- &quot;Country&quot;
 names(happiness_2018)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiT3ZlcmFsbC5yYW5rXCIgICAgICAgICAgICAgIFwiQ291bnRyeVwiICAgICAgICAgICAgICAgICAgIFwiSGFwcGluZXNzLlNjb3JlXCIgICAgICAgICAgXG5bNF0gXCJHRFAucGVyLmNhcGl0YVwiICAgICAgICAgICAgXCJTb2NpYWwuc3VwcG9ydFwiICAgICAgICAgICAgXCJIZWFsdGh5LmxpZmUuZXhwZWN0YW5jeVwiICBcbls3XSBcIkZyZWVkb21cIiAgICAgICAgICAgICAgICAgICBcIkdlbmVyb3NpdHlcIiAgICAgICAgICAgICAgICBcIlBlcmNlcHRpb25zLm9mLmNvcnJ1cHRpb25cIlxuIn0= -->
-<pre><code>[1] &quot;Overall.rank&quot;              &quot;Country&quot;                   &quot;Happiness.Score&quot;          
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSGFwcGluZXNzLlJhbmtcIiAgICAgICAgICAgIFwiQ291bnRyeVwiICAgICAgICAgICAgICAgICAgIFwiSGFwcGluZXNzLlNjb3JlXCIgICAgICAgICAgXG5bNF0gXCJHRFAucGVyLmNhcGl0YVwiICAgICAgICAgICAgXCJTb2NpYWwuc3VwcG9ydFwiICAgICAgICAgICAgXCJIZWFsdGh5LmxpZmUuZXhwZWN0YW5jeVwiICBcbls3XSBcIkZyZWVkb21cIiAgICAgICAgICAgICAgICAgICBcIkdlbmVyb3NpdHlcIiAgICAgICAgICAgICAgICBcIlBlcmNlcHRpb25zLm9mLmNvcnJ1cHRpb25cIlxuIn0= -->
+<pre><code>[1] &quot;Happiness.Rank&quot;            &quot;Country&quot;                   &quot;Happiness.Score&quot;          
 [4] &quot;GDP.per.capita&quot;            &quot;Social.support&quot;            &quot;Healthy.life.expectancy&quot;  
 [7] &quot;Freedom&quot;                   &quot;Generosity&quot;                &quot;Perceptions.of.corruption&quot;</code></pre>
 <!-- rnb-output-end -->
@@ -363,11 +368,16 @@ names(happiness_2018)</code></pre>
 <pre class="r"><code>colnames(happiness_2019)[2] &lt;- &quot;Country&quot;
 names(happiness_2019)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiT3ZlcmFsbC5yYW5rXCIgICAgICAgICAgICAgIFwiQ291bnRyeVwiICAgICAgICAgICAgICAgICAgIFwiSGFwcGluZXNzLlNjb3JlXCIgICAgICAgICAgXG5bNF0gXCJHRFAucGVyLmNhcGl0YVwiICAgICAgICAgICAgXCJTb2NpYWwuc3VwcG9ydFwiICAgICAgICAgICAgXCJIZWFsdGh5LmxpZmUuZXhwZWN0YW5jeVwiICBcbls3XSBcIkZyZWVkb21cIiAgICAgICAgICAgICAgICAgICBcIkdlbmVyb3NpdHlcIiAgICAgICAgICAgICAgICBcIlBlcmNlcHRpb25zLm9mLmNvcnJ1cHRpb25cIlxuIn0= -->
-<pre><code>[1] &quot;Overall.rank&quot;              &quot;Country&quot;                   &quot;Happiness.Score&quot;          
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSGFwcGluZXNzLlJhbmtcIiAgICAgICAgICAgIFwiQ291bnRyeVwiICAgICAgICAgICAgICAgICAgIFwiSGFwcGluZXNzLlNjb3JlXCIgICAgICAgICAgXG5bNF0gXCJHRFAucGVyLmNhcGl0YVwiICAgICAgICAgICAgXCJTb2NpYWwuc3VwcG9ydFwiICAgICAgICAgICAgXCJIZWFsdGh5LmxpZmUuZXhwZWN0YW5jeVwiICBcbls3XSBcIkZyZWVkb21cIiAgICAgICAgICAgICAgICAgICBcIkdlbmVyb3NpdHlcIiAgICAgICAgICAgICAgICBcIlBlcmNlcHRpb25zLm9mLmNvcnJ1cHRpb25cIlxuIn0= -->
+<pre><code>[1] &quot;Happiness.Rank&quot;            &quot;Country&quot;                   &quot;Happiness.Score&quot;          
 [4] &quot;GDP.per.capita&quot;            &quot;Social.support&quot;            &quot;Healthy.life.expectancy&quot;  
 [7] &quot;Freedom&quot;                   &quot;Generosity&quot;                &quot;Perceptions.of.corruption&quot;</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGFwcGluZXNzXzIwMTUgPSBzdWJzZXQoaGFwcGluZXNzXzIwMTUsIHNlbGVjdD0tYyhSZWdpb24sU3RhbmRhcmQuRXJyb3IsRHlzdG9waWEuUmVzaWR1YWwpKVxuaGFwcGluZXNzXzIwMTYgPSBzdWJzZXQoaGFwcGluZXNzXzIwMTYsc2VsZWN0PS1jKFJlZ2lvbixMb3dlci5Db25maWRlbmNlLkludGVydmFsLFVwcGVyLkNvbmZpZGVuY2UuSW50ZXJ2YWwsRHlzdG9waWEuUmVzaWR1YWwpKVxuaGFwcGluZXNzXzIwMTcgPSBzdWJzZXQoaGFwcGluZXNzXzIwMTcsIHNlbGVjdD0tYyhXaGlza2VyLmhpZ2gsV2hpc2tlci5sb3csRHlzdG9waWEuUmVzaWR1YWwpKVxuYGBgIn0= -->
+<pre class="r"><code>happiness_2015 = subset(happiness_2015, select=-c(Region,Standard.Error,Dystopia.Residual))
+happiness_2016 = subset(happiness_2016,select=-c(Region,Lower.Confidence.Interval,Upper.Confidence.Interval,Dystopia.Residual))
+happiness_2017 = subset(happiness_2017, select=-c(Whisker.high,Whisker.low,Dystopia.Residual))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -386,43 +396,65 @@ happiness_2019$Year=2019</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDb21iaW5lIDIwMTUtMjAxOSBoYXBwaW5lc3MgZGF0YSBpbnRvIG9uZSBkYXRhZnJhbWVcbmhhcHBpbmVzc18xID0gaW5uZXJfam9pbihoYXBwaW5lc3NfMjAxNSwgaGFwcGluZXNzXzIwMTYsIGhhcHBpbmVzc18yMDE3LCBieT1cIkNvdW50cnlcIilcbmhhcHBpbmVzc18yID0gaW5uZXJfam9pbihoYXBwaW5lc3NfMjAxOCwgaGFwcGluZXNzXzIwMTksIGJ5PVwiQ291bnRyeVwiKVxuI2hhcHBpbmVzc18zID0gaW5uZXJfam9pbihoYXBwaW5lc3NfMiwgaGFwcGluZXNzXzIwMTgsIGJ5PVwiQ291bnRyeVwiKVxuI2hhcHBpbmVzcyA9IGlubmVyX2pvaW4oaGFwcGluZXNzXzMsIGhhcHBpbmVzc18yMDE5LCBieT1cIkNvdW50cnlcIilcbm5hbWVzKGhhcHBpbmVzc18xKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDb21iaW5lIDIwMTUtMjAxOSBoYXBwaW5lc3MgZGF0YSBpbnRvIG9uZSBkYXRhZnJhbWVcbmhhcHBpbmVzcyA9IHNtYXJ0YmluZChoYXBwaW5lc3NfMjAxNSwgaGFwcGluZXNzXzIwMTYsIGhhcHBpbmVzc18yMDE3LCBoYXBwaW5lc3NfMjAxOCwgaGFwcGluZXNzXzIwMTkpXG5gYGAifQ== -->
 <pre class="r"><code># Combine 2015-2019 happiness data into one dataframe
-happiness_1 = inner_join(happiness_2015, happiness_2016, happiness_2017, by=&quot;Country&quot;)
-happiness_2 = inner_join(happiness_2018, happiness_2019, by=&quot;Country&quot;)
-#happiness_3 = inner_join(happiness_2, happiness_2018, by=&quot;Country&quot;)
-#happiness = inner_join(happiness_3, happiness_2019, by=&quot;Country&quot;)
-names(happiness_1)</code></pre>
+happiness = smartbind(happiness_2015, happiness_2016, happiness_2017, happiness_2018, happiness_2019)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIkNvdW50cnlcIiAgICAgICAgICAgICAgICAgICAgIFwiUmVnaW9uLnhcIiAgICAgICAgICAgICAgICAgICAgXCJIYXBwaW5lc3MuUmFuay54XCIgICAgICAgICAgIFxuIFs0XSBcIkhhcHBpbmVzcy5TY29yZS54XCIgICAgICAgICAgIFwiU3RhbmRhcmQuRXJyb3JcIiAgICAgICAgICAgICAgXCJHRFAucGVyLmNhcGl0YS54XCIgICAgICAgICAgIFxuIFs3XSBcIkZhbWlseS54XCIgICAgICAgICAgICAgICAgICAgIFwiSGVhbHRoeS5saWZlLmV4cGVjdGFuY3kueFwiICAgXCJGcmVlZG9tLnhcIiAgICAgICAgICAgICAgICAgIFxuWzEwXSBcIlBlcmNlcHRpb25zLm9mLmNvcnJ1cHRpb24ueFwiIFwiR2VuZXJvc2l0eS54XCIgICAgICAgICAgICAgICAgXCJEeXN0b3BpYS5SZXNpZHVhbC54XCIgICAgICAgIFxuWzEzXSBcIlllYXIueFwiICAgICAgICAgICAgICAgICAgICAgIFwiUmVnaW9uLnlcIiAgICAgICAgICAgICAgICAgICAgXCJIYXBwaW5lc3MuUmFuay55XCIgICAgICAgICAgIFxuWzE2XSBcIkhhcHBpbmVzcy5TY29yZS55XCIgICAgICAgICAgIFwiTG93ZXIuQ29uZmlkZW5jZS5JbnRlcnZhbFwiICAgXCJVcHBlci5Db25maWRlbmNlLkludGVydmFsXCIgIFxuWzE5XSBcIkdEUC5wZXIuY2FwaXRhLnlcIiAgICAgICAgICAgIFwiRmFtaWx5LnlcIiAgICAgICAgICAgICAgICAgICAgXCJIZWFsdGh5LmxpZmUuZXhwZWN0YW5jeS55XCIgIFxuWzIyXSBcIkZyZWVkb20ueVwiICAgICAgICAgICAgICAgICAgIFwiUGVyY2VwdGlvbnMub2YuY29ycnVwdGlvbi55XCIgXCJHZW5lcm9zaXR5LnlcIiAgICAgICAgICAgICAgIFxuWzI1XSBcIkR5c3RvcGlhLlJlc2lkdWFsLnlcIiAgICAgICAgIFwiWWVhci55XCIgICAgICAgICAgICAgICAgICAgICBcbiJ9 -->
-<pre><code> [1] &quot;Country&quot;                     &quot;Region.x&quot;                    &quot;Happiness.Rank.x&quot;           
- [4] &quot;Happiness.Score.x&quot;           &quot;Standard.Error&quot;              &quot;GDP.per.capita.x&quot;           
- [7] &quot;Family.x&quot;                    &quot;Healthy.life.expectancy.x&quot;   &quot;Freedom.x&quot;                  
-[10] &quot;Perceptions.of.corruption.x&quot; &quot;Generosity.x&quot;                &quot;Dystopia.Residual.x&quot;        
-[13] &quot;Year.x&quot;                      &quot;Region.y&quot;                    &quot;Happiness.Rank.y&quot;           
-[16] &quot;Happiness.Score.y&quot;           &quot;Lower.Confidence.Interval&quot;   &quot;Upper.Confidence.Interval&quot;  
-[19] &quot;GDP.per.capita.y&quot;            &quot;Family.y&quot;                    &quot;Healthy.life.expectancy.y&quot;  
-[22] &quot;Freedom.y&quot;                   &quot;Perceptions.of.corruption.y&quot; &quot;Generosity.y&quot;               
-[25] &quot;Dystopia.Residual.y&quot;         &quot;Year.y&quot;                     </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiQ29sdW1uIGNsYXNzIG1pc21hdGNoIGZvciAnUGVyY2VwdGlvbnMub2YuY29ycnVwdGlvbicuIENvbnZlcnRpbmcgY29sdW1uIHRvIGNsYXNzICdjaGFyYWN0ZXInLkNvbHVtbiBjbGFzcyBtaXNtYXRjaCBmb3IgJ1BlcmNlcHRpb25zLm9mLmNvcnJ1cHRpb24nLiBDb252ZXJ0aW5nIGNvbHVtbiB0byBjbGFzcyAnY2hhcmFjdGVyJy5cbiJ9 -->
+<pre><code>Column class mismatch for &#39;Perceptions.of.corruption&#39;. Converting column to class &#39;character&#39;.Column class mismatch for &#39;Perceptions.of.corruption&#39;. Converting column to class &#39;character&#39;.</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFtZXMoaGFwcGluZXNzXzIpXG5gYGAifQ== -->
-<pre class="r"><code>names(happiness_2)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFtZXMoaGFwcGluZXNzKVxuYGBgIn0= -->
+<pre class="r"><code>names(happiness)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIk92ZXJhbGwucmFuay54XCIgICAgICAgICAgICAgIFwiQ291bnRyeVwiICAgICAgICAgICAgICAgICAgICAgXCJIYXBwaW5lc3MuU2NvcmUueFwiICAgICAgICAgIFxuIFs0XSBcIkdEUC5wZXIuY2FwaXRhLnhcIiAgICAgICAgICAgIFwiU29jaWFsLnN1cHBvcnQueFwiICAgICAgICAgICAgXCJIZWFsdGh5LmxpZmUuZXhwZWN0YW5jeS54XCIgIFxuIFs3XSBcIkZyZWVkb20ueFwiICAgICAgICAgICAgICAgICAgIFwiR2VuZXJvc2l0eS54XCIgICAgICAgICAgICAgICAgXCJQZXJjZXB0aW9ucy5vZi5jb3JydXB0aW9uLnhcIlxuWzEwXSBcIlllYXIueFwiICAgICAgICAgICAgICAgICAgICAgIFwiT3ZlcmFsbC5yYW5rLnlcIiAgICAgICAgICAgICAgXCJIYXBwaW5lc3MuU2NvcmUueVwiICAgICAgICAgIFxuWzEzXSBcIkdEUC5wZXIuY2FwaXRhLnlcIiAgICAgICAgICAgIFwiU29jaWFsLnN1cHBvcnQueVwiICAgICAgICAgICAgXCJIZWFsdGh5LmxpZmUuZXhwZWN0YW5jeS55XCIgIFxuWzE2XSBcIkZyZWVkb20ueVwiICAgICAgICAgICAgICAgICAgIFwiR2VuZXJvc2l0eS55XCIgICAgICAgICAgICAgICAgXCJQZXJjZXB0aW9ucy5vZi5jb3JydXB0aW9uLnlcIlxuWzE5XSBcIlllYXIueVwiICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code> [1] &quot;Overall.rank.x&quot;              &quot;Country&quot;                     &quot;Happiness.Score.x&quot;          
- [4] &quot;GDP.per.capita.x&quot;            &quot;Social.support.x&quot;            &quot;Healthy.life.expectancy.x&quot;  
- [7] &quot;Freedom.x&quot;                   &quot;Generosity.x&quot;                &quot;Perceptions.of.corruption.x&quot;
-[10] &quot;Year.x&quot;                      &quot;Overall.rank.y&quot;              &quot;Happiness.Score.y&quot;          
-[13] &quot;GDP.per.capita.y&quot;            &quot;Social.support.y&quot;            &quot;Healthy.life.expectancy.y&quot;  
-[16] &quot;Freedom.y&quot;                   &quot;Generosity.y&quot;                &quot;Perceptions.of.corruption.y&quot;
-[19] &quot;Year.y&quot;                     </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIkNvdW50cnlcIiAgICAgICAgICAgICAgICAgICBcIkhhcHBpbmVzcy5SYW5rXCIgICAgICAgICAgICBcIkhhcHBpbmVzcy5TY29yZVwiICAgICAgICAgIFxuIFs0XSBcIkdEUC5wZXIuY2FwaXRhXCIgICAgICAgICAgICBcIkZhbWlseVwiICAgICAgICAgICAgICAgICAgICBcIkhlYWx0aHkubGlmZS5leHBlY3RhbmN5XCIgIFxuIFs3XSBcIkZyZWVkb21cIiAgICAgICAgICAgICAgICAgICBcIlBlcmNlcHRpb25zLm9mLmNvcnJ1cHRpb25cIiBcIkdlbmVyb3NpdHlcIiAgICAgICAgICAgICAgIFxuWzEwXSBcIlllYXJcIiAgICAgICAgICAgICAgICAgICAgICBcIlNvY2lhbC5zdXBwb3J0XCIgICAgICAgICAgIFxuIn0= -->
+<pre><code> [1] &quot;Country&quot;                   &quot;Happiness.Rank&quot;            &quot;Happiness.Score&quot;          
+ [4] &quot;GDP.per.capita&quot;            &quot;Family&quot;                    &quot;Healthy.life.expectancy&quot;  
+ [7] &quot;Freedom&quot;                   &quot;Perceptions.of.corruption&quot; &quot;Generosity&quot;               
+[10] &quot;Year&quot;                      &quot;Social.support&quot;           </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFtZXMoY292aWQyMDIwKVxuYGBgIn0= -->
+<pre class="r"><code>names(covid2020)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImlzb19jb2RlXCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImNvbnRpbmVudFwiICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFszXSBcImxvY2F0aW9uXCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImRhdGVcIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs1XSBcInRvdGFsX2Nhc2VzXCIgICAgICAgICAgICAgICAgICAgICAgICAgICBcIm5ld19jYXNlc1wiICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs3XSBcIm5ld19jYXNlc19zbW9vdGhlZFwiICAgICAgICAgICAgICAgICAgICBcInRvdGFsX2RlYXRoc1wiICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5XSBcIm5ld19kZWF0aHNcIiAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIm5ld19kZWF0aHNfc21vb3RoZWRcIiAgICAgICAgICAgICAgICAgIFxuWzExXSBcInRvdGFsX2Nhc2VzX3Blcl9taWxsaW9uXCIgICAgICAgICAgICAgICBcIm5ld19jYXNlc19wZXJfbWlsbGlvblwiICAgICAgICAgICAgICAgIFxuWzEzXSBcIm5ld19jYXNlc19zbW9vdGhlZF9wZXJfbWlsbGlvblwiICAgICAgICBcInRvdGFsX2RlYXRoc19wZXJfbWlsbGlvblwiICAgICAgICAgICAgIFxuWzE1XSBcIm5ld19kZWF0aHNfcGVyX21pbGxpb25cIiAgICAgICAgICAgICAgICBcIm5ld19kZWF0aHNfc21vb3RoZWRfcGVyX21pbGxpb25cIiAgICAgIFxuWzE3XSBcInJlcHJvZHVjdGlvbl9yYXRlXCIgICAgICAgICAgICAgICAgICAgICBcImljdV9wYXRpZW50c1wiICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE5XSBcImljdV9wYXRpZW50c19wZXJfbWlsbGlvblwiICAgICAgICAgICAgICBcImhvc3BfcGF0aWVudHNcIiAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxXSBcImhvc3BfcGF0aWVudHNfcGVyX21pbGxpb25cIiAgICAgICAgICAgICBcIndlZWtseV9pY3VfYWRtaXNzaW9uc1wiICAgICAgICAgICAgICAgIFxuWzIzXSBcIndlZWtseV9pY3VfYWRtaXNzaW9uc19wZXJfbWlsbGlvblwiICAgICBcIndlZWtseV9ob3NwX2FkbWlzc2lvbnNcIiAgICAgICAgICAgICAgIFxuWzI1XSBcIndlZWtseV9ob3NwX2FkbWlzc2lvbnNfcGVyX21pbGxpb25cIiAgICBcIm5ld190ZXN0c1wiICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI3XSBcInRvdGFsX3Rlc3RzXCIgICAgICAgICAgICAgICAgICAgICAgICAgICBcInRvdGFsX3Rlc3RzX3Blcl90aG91c2FuZFwiICAgICAgICAgICAgIFxuWzI5XSBcIm5ld190ZXN0c19wZXJfdGhvdXNhbmRcIiAgICAgICAgICAgICAgICBcIm5ld190ZXN0c19zbW9vdGhlZFwiICAgICAgICAgICAgICAgICAgIFxuWzMxXSBcIm5ld190ZXN0c19zbW9vdGhlZF9wZXJfdGhvdXNhbmRcIiAgICAgICBcInBvc2l0aXZlX3JhdGVcIiAgICAgICAgICAgICAgICAgICAgICAgIFxuWzMzXSBcInRlc3RzX3Blcl9jYXNlXCIgICAgICAgICAgICAgICAgICAgICAgICBcInRlc3RzX3VuaXRzXCIgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzM1XSBcInRvdGFsX3ZhY2NpbmF0aW9uc1wiICAgICAgICAgICAgICAgICAgICBcInBlb3BsZV92YWNjaW5hdGVkXCIgICAgICAgICAgICAgICAgICAgIFxuWzM3XSBcInBlb3BsZV9mdWxseV92YWNjaW5hdGVkXCIgICAgICAgICAgICAgICBcIm5ld192YWNjaW5hdGlvbnNcIiAgICAgICAgICAgICAgICAgICAgIFxuWzM5XSBcIm5ld192YWNjaW5hdGlvbnNfc21vb3RoZWRcIiAgICAgICAgICAgICBcInRvdGFsX3ZhY2NpbmF0aW9uc19wZXJfaHVuZHJlZFwiICAgICAgIFxuWzQxXSBcInBlb3BsZV92YWNjaW5hdGVkX3Blcl9odW5kcmVkXCIgICAgICAgICBcInBlb3BsZV9mdWxseV92YWNjaW5hdGVkX3Blcl9odW5kcmVkXCIgIFxuWzQzXSBcIm5ld192YWNjaW5hdGlvbnNfc21vb3RoZWRfcGVyX21pbGxpb25cIiBcInN0cmluZ2VuY3lfaW5kZXhcIiAgICAgICAgICAgICAgICAgICAgIFxuWzQ1XSBcInBvcHVsYXRpb25cIiAgICAgICAgICAgICAgICAgICAgICAgICAgICBcInBvcHVsYXRpb25fZGVuc2l0eVwiICAgICAgICAgICAgICAgICAgIFxuWzQ3XSBcIm1lZGlhbl9hZ2VcIiAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImFnZWRfNjVfb2xkZXJcIiAgICAgICAgICAgICAgICAgICAgICAgIFxuWzQ5XSBcImFnZWRfNzBfb2xkZXJcIiAgICAgICAgICAgICAgICAgICAgICAgICBcImdkcF9wZXJfY2FwaXRhXCIgICAgICAgICAgICAgICAgICAgICAgIFxuWzUxXSBcImV4dHJlbWVfcG92ZXJ0eVwiICAgICAgICAgICAgICAgICAgICAgICBcImNhcmRpb3Zhc2NfZGVhdGhfcmF0ZVwiICAgICAgICAgICAgICAgIFxuWzUzXSBcImRpYWJldGVzX3ByZXZhbGVuY2VcIiAgICAgICAgICAgICAgICAgICBcImZlbWFsZV9zbW9rZXJzXCIgICAgICAgICAgICAgICAgICAgICAgIFxuWzU1XSBcIm1hbGVfc21va2Vyc1wiICAgICAgICAgICAgICAgICAgICAgICAgICBcImhhbmR3YXNoaW5nX2ZhY2lsaXRpZXNcIiAgICAgICAgICAgICAgIFxuWzU3XSBcImhvc3BpdGFsX2JlZHNfcGVyX3Rob3VzYW5kXCIgICAgICAgICAgICBcImxpZmVfZXhwZWN0YW5jeVwiICAgICAgICAgICAgICAgICAgICAgIFxuWzU5XSBcImh1bWFuX2RldmVsb3BtZW50X2luZGV4XCIgICAgICAgICAgICAgIFxuIn0= -->
+<pre><code> [1] &quot;iso_code&quot;                              &quot;continent&quot;                            
+ [3] &quot;location&quot;                              &quot;date&quot;                                 
+ [5] &quot;total_cases&quot;                           &quot;new_cases&quot;                            
+ [7] &quot;new_cases_smoothed&quot;                    &quot;total_deaths&quot;                         
+ [9] &quot;new_deaths&quot;                            &quot;new_deaths_smoothed&quot;                  
+[11] &quot;total_cases_per_million&quot;               &quot;new_cases_per_million&quot;                
+[13] &quot;new_cases_smoothed_per_million&quot;        &quot;total_deaths_per_million&quot;             
+[15] &quot;new_deaths_per_million&quot;                &quot;new_deaths_smoothed_per_million&quot;      
+[17] &quot;reproduction_rate&quot;                     &quot;icu_patients&quot;                         
+[19] &quot;icu_patients_per_million&quot;              &quot;hosp_patients&quot;                        
+[21] &quot;hosp_patients_per_million&quot;             &quot;weekly_icu_admissions&quot;                
+[23] &quot;weekly_icu_admissions_per_million&quot;     &quot;weekly_hosp_admissions&quot;               
+[25] &quot;weekly_hosp_admissions_per_million&quot;    &quot;new_tests&quot;                            
+[27] &quot;total_tests&quot;                           &quot;total_tests_per_thousand&quot;             
+[29] &quot;new_tests_per_thousand&quot;                &quot;new_tests_smoothed&quot;                   
+[31] &quot;new_tests_smoothed_per_thousand&quot;       &quot;positive_rate&quot;                        
+[33] &quot;tests_per_case&quot;                        &quot;tests_units&quot;                          
+[35] &quot;total_vaccinations&quot;                    &quot;people_vaccinated&quot;                    
+[37] &quot;people_fully_vaccinated&quot;               &quot;new_vaccinations&quot;                     
+[39] &quot;new_vaccinations_smoothed&quot;             &quot;total_vaccinations_per_hundred&quot;       
+[41] &quot;people_vaccinated_per_hundred&quot;         &quot;people_fully_vaccinated_per_hundred&quot;  
+[43] &quot;new_vaccinations_smoothed_per_million&quot; &quot;stringency_index&quot;                     
+[45] &quot;population&quot;                            &quot;population_density&quot;                   
+[47] &quot;median_age&quot;                            &quot;aged_65_older&quot;                        
+[49] &quot;aged_70_older&quot;                         &quot;gdp_per_capita&quot;                       
+[51] &quot;extreme_poverty&quot;                       &quot;cardiovasc_death_rate&quot;                
+[53] &quot;diabetes_prevalence&quot;                   &quot;female_smokers&quot;                       
+[55] &quot;male_smokers&quot;                          &quot;handwashing_facilities&quot;               
+[57] &quot;hospital_beds_per_thousand&quot;            &quot;life_expectancy&quot;                      
+[59] &quot;human_development_index&quot;              </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiNjcwIFByb2plY3QgLSBIYXBwaW5lc3MgaW4gdGhlIFRpbWUgb2YgQ292aWQiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KSE9XIFRPOiAoY2FuIGRlbGV0ZSB0aGlzIGxhdGVyIG9uY2Ugd2UgZ2V0IHRoZSBoYW5nIG9mIGl0KQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ21kK1NoaWZ0K0VudGVyKi4gCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ21kK09wdGlvbitJKi4KCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ21kK1NoaWZ0K0sqIHRvIHByZXZpZXcgdGhlIEhUTUwgZmlsZSkuIAoKVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLgoKIyMjIEJlZ2luIFByb2plY3QgU3R1ZmYgCgpUaGUgdGhyZWUgS2FnZ2xlIGRhdGFzZXRzIHdlIHVzZWQgYXJlIGF0IHRoZSBmb2xsb3dpbmcgVVJMUzoKaHR0cHM6Ly93d3cua2FnZ2xlLmNvbS90dW5ndXovZGF0YS1vbi1jb3ZpZDE5LWNvcm9uYXZpcnVzP3NlbGVjdD1vd2lkLWNvdmlkLWRhdGEuY3N2Cmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vYWpheXBhbHNpbmdobG8vd29ybGQtaGFwcGluZXNzLXJlcG9ydC0yMDIxCmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vdW5zZHNuL3dvcmxkLWhhcHBpbmVzcwoKTG9hZCB0aGUgbGlicmFyaWVzIHdlIG5lZWQgZm9yIHRoZSBwcm9qZWN0OgpgYGB7cn0KbGlicmFyeShnZ3Bsb3QyKQpsaWJyYXJ5KHRpZHlyKQpsaWJyYXJ5KGRwbHlyKQojbGlicmFyeShyZWFkcikKYGBgCgpMb2FkIHRoZSBkYXRhc2V0czoKCgpgYGB7cn0KaGFwcGluZXNzXzIwMTUgPC0gcmVhZC5jc3YoImRhdGEvMjAxNS5jc3YiLGhlYWRlcj1ULG5hLnN0cmluZ3M9Ij8iKQpoYXBwaW5lc3NfMjAxNiA8LSByZWFkLmNzdigiZGF0YS8yMDE2LmNzdiIsaGVhZGVyPVQsbmEuc3RyaW5ncz0iPyIpCmhhcHBpbmVzc18yMDE3IDwtIHJlYWQuY3N2KCJkYXRhLzIwMTcuY3N2IixoZWFkZXI9VCxuYS5zdHJpbmdzPSI/IikKaGFwcGluZXNzXzIwMTggPC0gcmVhZC5jc3YoImRhdGEvMjAxOC5jc3YiLGhlYWRlcj1ULG5hLnN0cmluZ3M9Ij8iKQpoYXBwaW5lc3NfMjAxOSA8LSByZWFkLmNzdigiZGF0YS8yMDE5LmNzdiIsaGVhZGVyPVQsbmEuc3RyaW5ncz0iPyIpCmhhcHBpbmVzc18yMDIxIDwtIHJlYWQuY3N2KCJkYXRhL3dvcmxkLWhhcHBpbmVzcy1yZXBvcnQtMjAyMS5jc3YiLGhlYWRlcj1ULG5hLnN0cmluZ3M9Ij8iKQoKY292aWQyMDIwIDwtIHJlYWQuY3N2KCJkYXRhL293aWQtY292aWQtZGF0YS5jc3YiLGhlYWRlcj1ULG5hLnN0cmluZ3M9Ij8iKQoKIyBjb3ZpZDIwMjBfZmlsdGVyZWQgPC0gcmVhZF9leGNlbCgiRG9jdW1lbnRzLzIwMjFzcHJpbmcvNjcwIERhdGEgU2NpZW5jZS9wcm9qZWN0L2NvdmlkMjAyMC1maWx0ZXJlZC54bHN4IikKYGBgCgpNYW51YWxseSwgb25jZSB3ZSBsb2FkZWQgaW4gdGhlIGRhdGEgd2Ugbm90aWNlZCBtYW55IGNvbHVtbiBuYW1lIG1pc21hdGNoZXMgYW5kIGhhZCB0byByZW5hbWUgcXVpdGUgYSBmZXcgKGZvciBleGFtcGxlLCAiQ291bnRyeSIgdnMgIkNvdW50cnkgb3IgUmVnaW9uIiBvciAiU2NvcmUiIHZzLiAiSGFwcGluZXNzIFNjb3JlIiB3ZSBzdGFydGVkIGRvaW5nIHRoaXMgcHJvZ3JhbWF0aWNhbGx5IGJ1dCBpdCB3YXMgcHJldHR5IHRlZGlvdXMgY29kZSB0byB3cml0ZSBhbmQgbG9vayBhdCBzbyB3ZSB3YW50ZWQgdG8gdGFrZSBpdCBvdXQgb2YgdGhlIG5vdGVib29rLCB3ZSBsZWZ0IG9uZSBleGFtcGxlLCBjaGFuZ2luZyB0aGUgY291bnRyeSBjb2x1bW4gbmFtZSBqdXN0IGFzIGFuIGV4YW1wbGUgKQpgYGB7cn0KZGltKGhhcHBpbmVzc18yMDE1KQpuYW1lcyhoYXBwaW5lc3NfMjAxNSkKZGltKGhhcHBpbmVzc18yMDE2KQpuYW1lcyhoYXBwaW5lc3NfMjAxNikKZGltKGhhcHBpbmVzc18yMDE3KQpuYW1lcyhoYXBwaW5lc3NfMjAxNykKZGltKGhhcHBpbmVzc18yMDE4KQpuYW1lcyhoYXBwaW5lc3NfMjAxOCkKZGltKGhhcHBpbmVzc18yMDE5KQpuYW1lcyhoYXBwaW5lc3NfMjAxOSkKYGBgCgojIyMgUmVuYW1lICJDb3VudHJ5Lm9yLnJlZ2lvbiIgdG8gIkNvdW50cnkiIGluIDIwMTgvMjAxOSBzbyB3ZSBjYW4gam9pbiB3aXRoIHRoZSByZXN0LgpgYGB7cn0KY29sbmFtZXMoaGFwcGluZXNzXzIwMTgpWzJdIDwtICJDb3VudHJ5IgpuYW1lcyhoYXBwaW5lc3NfMjAxOCkKY29sbmFtZXMoaGFwcGluZXNzXzIwMTkpWzJdIDwtICJDb3VudHJ5IgpuYW1lcyhoYXBwaW5lc3NfMjAxOSkKYGBgCiMjIyBBZGQgYSAiWWVhciIgQ29sdW1uIHRvIGVhY2ggdG8ga2VlcCB0cmFjayBiZWZvcmUgbWVyZ2luZy4KYGBge3J9CmhhcHBpbmVzc18yMDE1JFllYXI9MjAxNQpoYXBwaW5lc3NfMjAxNiRZZWFyPTIwMTYKaGFwcGluZXNzXzIwMTckWWVhcj0yMDE3CmhhcHBpbmVzc18yMDE4JFllYXI9MjAxOApoYXBwaW5lc3NfMjAxOSRZZWFyPTIwMTkKYGBgCgoKYGBge3J9CiMgQ29tYmluZSAyMDE1LTIwMTkgaGFwcGluZXNzIGRhdGEgaW50byBvbmUgZGF0YWZyYW1lCmhhcHBpbmVzc18xID0gaW5uZXJfam9pbihoYXBwaW5lc3NfMjAxNSwgaGFwcGluZXNzXzIwMTYsIGhhcHBpbmVzc18yMDE3LCBieT0iQ291bnRyeSIpCmhhcHBpbmVzc18yID0gaW5uZXJfam9pbihoYXBwaW5lc3NfMjAxOCwgaGFwcGluZXNzXzIwMTksIGJ5PSJDb3VudHJ5IikKI2hhcHBpbmVzc18zID0gaW5uZXJfam9pbihoYXBwaW5lc3NfMiwgaGFwcGluZXNzXzIwMTgsIGJ5PSJDb3VudHJ5IikKI2hhcHBpbmVzcyA9IGlubmVyX2pvaW4oaGFwcGluZXNzXzMsIGhhcHBpbmVzc18yMDE5LCBieT0iQ291bnRyeSIpCm5hbWVzKGhhcHBpbmVzc18xKQpuYW1lcyhoYXBwaW5lc3NfMikKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiNjcwIFByb2plY3QgLSBIYXBwaW5lc3MgaW4gdGhlIFRpbWUgb2YgQ292aWQiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KSE9XIFRPOiAoY2FuIGRlbGV0ZSB0aGlzIGxhdGVyIG9uY2Ugd2UgZ2V0IHRoZSBoYW5nIG9mIGl0KQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ21kK1NoaWZ0K0VudGVyKi4gCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ21kK09wdGlvbitJKi4KCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ21kK1NoaWZ0K0sqIHRvIHByZXZpZXcgdGhlIEhUTUwgZmlsZSkuIAoKVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLgoKIyMjIEJlZ2luIFByb2plY3QgU3R1ZmYgCgpUaGUgdGhyZWUgS2FnZ2xlIGRhdGFzZXRzIHdlIHVzZWQgYXJlIGF0IHRoZSBmb2xsb3dpbmcgVVJMUzoKaHR0cHM6Ly93d3cua2FnZ2xlLmNvbS90dW5ndXovZGF0YS1vbi1jb3ZpZDE5LWNvcm9uYXZpcnVzP3NlbGVjdD1vd2lkLWNvdmlkLWRhdGEuY3N2Cmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vYWpheXBhbHNpbmdobG8vd29ybGQtaGFwcGluZXNzLXJlcG9ydC0yMDIxCmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vdW5zZHNuL3dvcmxkLWhhcHBpbmVzcwoKTG9hZCB0aGUgbGlicmFyaWVzIHdlIG5lZWQgZm9yIHRoZSBwcm9qZWN0OgpgYGB7cn0KbGlicmFyeShnZ3Bsb3QyKQpsaWJyYXJ5KHRpZHlyKQpsaWJyYXJ5KGRwbHlyKQppbnN0YWxsLnBhY2thZ2VzKCdndG9vbHMnKQpsaWJyYXJ5KGd0b29scykKI2xpYnJhcnkocmVhZHIpCmBgYAoKTG9hZCB0aGUgZGF0YXNldHM6CgoKYGBge3J9CmhhcHBpbmVzc18yMDE1IDwtIHJlYWQuY3N2KCJkYXRhLzIwMTUuY3N2IixoZWFkZXI9VCxuYS5zdHJpbmdzPSI/IikKaGFwcGluZXNzXzIwMTYgPC0gcmVhZC5jc3YoImRhdGEvMjAxNi5jc3YiLGhlYWRlcj1ULG5hLnN0cmluZ3M9Ij8iKQpoYXBwaW5lc3NfMjAxNyA8LSByZWFkLmNzdigiZGF0YS8yMDE3LmNzdiIsaGVhZGVyPVQsbmEuc3RyaW5ncz0iPyIpCmhhcHBpbmVzc18yMDE4IDwtIHJlYWQuY3N2KCJkYXRhLzIwMTguY3N2IixoZWFkZXI9VCxuYS5zdHJpbmdzPSI/IikKaGFwcGluZXNzXzIwMTkgPC0gcmVhZC5jc3YoImRhdGEvMjAxOS5jc3YiLGhlYWRlcj1ULG5hLnN0cmluZ3M9Ij8iKQpoYXBwaW5lc3NfMjAyMSA8LSByZWFkLmNzdigiZGF0YS93b3JsZC1oYXBwaW5lc3MtcmVwb3J0LTIwMjEuY3N2IixoZWFkZXI9VCxuYS5zdHJpbmdzPSI/IikKCmNvdmlkMjAyMCA8LSByZWFkLmNzdigiZGF0YS9vd2lkLWNvdmlkLWRhdGEuY3N2IixoZWFkZXI9VCxuYS5zdHJpbmdzPSI/IikKCiMgY292aWQyMDIwX2ZpbHRlcmVkIDwtIHJlYWRfZXhjZWwoIkRvY3VtZW50cy8yMDIxc3ByaW5nLzY3MCBEYXRhIFNjaWVuY2UvcHJvamVjdC9jb3ZpZDIwMjAtZmlsdGVyZWQueGxzeCIpCmBgYAoKCmBgYHtyfQoKYGBgCgpNYW51YWxseSwgb25jZSB3ZSBsb2FkZWQgaW4gdGhlIGRhdGEgd2Ugbm90aWNlZCBtYW55IGNvbHVtbiBuYW1lIG1pc21hdGNoZXMgYW5kIGhhZCB0byByZW5hbWUgcXVpdGUgYSBmZXcgKGZvciBleGFtcGxlLCAiQ291bnRyeSIgdnMgIkNvdW50cnkgb3IgUmVnaW9uIiBvciAiU2NvcmUiIHZzLiAiSGFwcGluZXNzIFNjb3JlIiB3ZSBzdGFydGVkIGRvaW5nIHRoaXMgcHJvZ3JhbWF0aWNhbGx5IGJ1dCBpdCB3YXMgcHJldHR5IHRlZGlvdXMgY29kZSB0byB3cml0ZSBhbmQgbG9vayBhdCBzbyB3ZSB3YW50ZWQgdG8gdGFrZSBpdCBvdXQgb2YgdGhlIG5vdGVib29rLCB3ZSBsZWZ0IG9uZSBleGFtcGxlLCBjaGFuZ2luZyB0aGUgY291bnRyeSBjb2x1bW4gbmFtZSBqdXN0IGFzIGFuIGV4YW1wbGUgKQpgYGB7cn0KZGltKGhhcHBpbmVzc18yMDE1KQpuYW1lcyhoYXBwaW5lc3NfMjAxNSkKZGltKGhhcHBpbmVzc18yMDE2KQpuYW1lcyhoYXBwaW5lc3NfMjAxNikKZGltKGhhcHBpbmVzc18yMDE3KQpuYW1lcyhoYXBwaW5lc3NfMjAxNykKZGltKGhhcHBpbmVzc18yMDE4KQpuYW1lcyhoYXBwaW5lc3NfMjAxOCkKZGltKGhhcHBpbmVzc18yMDE5KQpuYW1lcyhoYXBwaW5lc3NfMjAxOSkKYGBgCgojIyMgUmVuYW1lICJDb3VudHJ5Lm9yLnJlZ2lvbiIgdG8gIkNvdW50cnkiIGluIDIwMTgvMjAxOSBzbyB3ZSBjYW4gam9pbiB3aXRoIHRoZSByZXN0LgpgYGB7cn0KY29sbmFtZXMoaGFwcGluZXNzXzIwMTgpWzJdIDwtICJDb3VudHJ5IgpuYW1lcyhoYXBwaW5lc3NfMjAxOCkKY29sbmFtZXMoaGFwcGluZXNzXzIwMTkpWzJdIDwtICJDb3VudHJ5IgpuYW1lcyhoYXBwaW5lc3NfMjAxOSkKCmhhcHBpbmVzc18yMDE1ID0gc3Vic2V0KGhhcHBpbmVzc18yMDE1LCBzZWxlY3Q9LWMoUmVnaW9uLFN0YW5kYXJkLkVycm9yLER5c3RvcGlhLlJlc2lkdWFsKSkKaGFwcGluZXNzXzIwMTYgPSBzdWJzZXQoaGFwcGluZXNzXzIwMTYsc2VsZWN0PS1jKFJlZ2lvbixMb3dlci5Db25maWRlbmNlLkludGVydmFsLFVwcGVyLkNvbmZpZGVuY2UuSW50ZXJ2YWwsRHlzdG9waWEuUmVzaWR1YWwpKQpoYXBwaW5lc3NfMjAxNyA9IHN1YnNldChoYXBwaW5lc3NfMjAxNywgc2VsZWN0PS1jKFdoaXNrZXIuaGlnaCxXaGlza2VyLmxvdyxEeXN0b3BpYS5SZXNpZHVhbCkpCmBgYAojIyMgQWRkIGEgIlllYXIiIENvbHVtbiB0byBlYWNoIHRvIGtlZXAgdHJhY2sgYmVmb3JlIG1lcmdpbmcuCmBgYHtyfQpoYXBwaW5lc3NfMjAxNSRZZWFyPTIwMTUKaGFwcGluZXNzXzIwMTYkWWVhcj0yMDE2CmhhcHBpbmVzc18yMDE3JFllYXI9MjAxNwpoYXBwaW5lc3NfMjAxOCRZZWFyPTIwMTgKaGFwcGluZXNzXzIwMTkkWWVhcj0yMDE5CmBgYAoKCmBgYHtyfQojIENvbWJpbmUgMjAxNS0yMDE5IGhhcHBpbmVzcyBkYXRhIGludG8gb25lIGRhdGFmcmFtZQpoYXBwaW5lc3MgPSBzbWFydGJpbmQoaGFwcGluZXNzXzIwMTUsIGhhcHBpbmVzc18yMDE2LCBoYXBwaW5lc3NfMjAxNywgaGFwcGluZXNzXzIwMTgsIGhhcHBpbmVzc18yMDE5KQpkaW0oaGFwcGluZXNzKQpuYW1lcyhoYXBwaW5lc3MpCmBgYApgYGB7cn0KbmFtZXMoY292aWQyMDIwKQpgYGAKCg==</div>
 
 
 
