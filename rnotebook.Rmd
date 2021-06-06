@@ -97,10 +97,53 @@ names(happiness)
 names(covid2020)
 ```
 
+
 ```{r}
 # check linear statistical significance of all predictors in response to happiness score. 
-lm = lm(Happiness.Score~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
-summary(lm)
+lm.score.1 = lm(Happiness.Score~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
+summary(lm.score.1)
 # plot predictions and residuals
-plot(predict(lm), residuals(lm))
+plot(predict(lm.score.1), residuals(lm.score.1))
 ```
+```{r}
+# check linear statistical significance of all predictors in response to happiness rank. 
+lm.rank = lm(Happiness.Rank~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
+summary(lm.rank)
+# plot predictions and residuals
+plot(predict(lm.rank), residuals(lm.rank))
+```
+
+```{r}
+# fit a linear model with significant predictors in response to happiness score. 
+lm.score.2 = lm(Happiness.Score~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom, data = happiness)
+summary(lm.score.2)
+# plot predictions and residuals
+plot(predict(lm.score.2), residuals(lm.score.2))
+```
+Results of linear model: 
+1. Generosity and Perceptions of corruption are the least significant predictors.
+2. The plot of lm.rank is the opposite of lm.score.1.
+3. By removing generosity and perceptions of corruption, we get similar R-squared values but a higher F-statistics.
+
+
+```{r}
+# fit a linear model with GDP.per.capita in response to happiness score using K-fold cross validation.
+library(boot)
+set.seed(1)
+cv.error.10 = rep(0:10)
+glm.score = glm(Happiness.Score~GDP.per.capita, data = happiness)
+cv.error.10 =cv.glm(happiness, glm.score, K=10)
+cv.error.10$delta
+```
+
+
+```{r}
+# fit a linear model with Freedom in response to happiness score using K-fold cross validation.
+glm.score.free = glm(Happiness.Score~Freedom, data = happiness)
+cv.error.10.free =cv.glm(happiness, glm.score.free, K=10)
+cv.error.10.free$delta
+```
+
+
+
+
