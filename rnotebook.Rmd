@@ -97,3 +97,10 @@ names(happiness)
 names(covid2020)
 ```
 
+```{r}
+# check linear statistical significance of all predictors in response to happiness score. 
+lm = lm(Happiness.Score~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
+summary(lm)
+# plot predictions and residuals
+plot(predict(lm), residuals(lm))
+```
