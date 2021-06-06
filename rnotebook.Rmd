@@ -171,3 +171,9 @@ dp <- ggplot(covid2020_filtered, aes(total_cases, total_deaths, colour = contine
 dp + geom_point()
 ```
 
+```{r}
+# merge happiness 2021 table with covid 2020 table using inner join
+happy.covid <- happiness_2021 %>% inner_join(covid2020_filtered, by = c("Country.name" = "location"))
+
+summary(happy.covid)
+```
