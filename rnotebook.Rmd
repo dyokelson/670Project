@@ -154,3 +154,9 @@ cv.error.5.multi =cv.glm(happiness, glm.score.multi, K=5)
 cv.error.5.multi
 ```
 
+```{r}
+# merge happiness 2021 table with covid 2020 table using inner join
+happy.covid <- happiness_2021 %>% inner_join(covid2020_filtered, by = c("Country.name" = "location"))
+
+summary(happy.covid)
+```
