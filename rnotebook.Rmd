@@ -246,26 +246,33 @@ glm.pred.rank
 
 actual <- subset(happy.covid, select=c(Country.name, Ladder.score ))
 colnames(actual)[2] <- "Score"
-actual <- actual[order(actual$Score),]
+actual <- actual[order(-actual$Score),]
 actual$Rank <- 1:nrow(actual)
+actual <- actual[1:15, ]
 
-predicted <- subset(happy.covid, select=c(Country.name, lm.pred.score))
-colnames(predicted)[2] <- "Pred_Score"
-predicted <- predicted[order(predicted$Pred_Score),]
-predicted$Pred_Rank <- 1:nrow(predicted)
+lm_predicted <- subset(happy.covid, select=c(Country.name, lm.pred.score))
+lm_predicted <- lm_predicted[order(-lm_predicted$lm.pred.score),]
+lm_predicted$lm_Rank <- 1:nrow(lm_predicted)
 
-results <- actual %>% inner_join(predicted, by = "Country.name")
+glm_predicted <- subset(happy.covid, select=c(Country.name, glm.pred.score))
+glm_predicted <- glm_predicted[order(-glm_predicted$glm.pred.score),]
+glm_predicted$glm_Rank <- 1:nrow(glm_predicted)
 
-# ggplot(NULL, aes(Rank, Country.name, group=Country.name)) +   
-#  geom_point(data = actual, col = "red") +
-#  geom_point(data = predicted, col = "blue")
+results <- actual %>% inner_join(lm_predicted, by = "Country.name")
+results <- results %>% inner_join(glm_predicted, by = "Country.name")
+names(results)
 
-# A few constants
-#actualColor <- "#69b3a2"
-#predictedColor <- rgb(0.2, 0.6, 0.9, 1)
-
-# ggplot(results, aes(x=Country.name)) +
-# geom_point( aes(y=Rank), size=2, color="blue") + 
-# geom_point( aes(y=Pred_Rank), size=2, color="red") +
-# scale_y_continuous(name = "Rank", sec.axis = sec_axis(name="Rank")) +theme_ipsum()
+ggplot(results, aes(x=Country.name, colour=Country.name)) +
+geom_point( aes(y=Rank), size=4) +
+geom_point( aes(y=lm_Rank), size=4, shape=3) +
+geom_point( aes(y=glm_Rank), size=4, shape=4) +
+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+```{r}
+# condition <- rep(c("Rank" , "lm_Rank") , 10)
+specie <- c(rep("sorgho" , 3) , rep("poacee" , 3) , rep("banana" , 3) , rep("triticum" , 3) )
+condition <- rep(c("normal" , "stress" , "Nitrogen") , 4)
+value <- abs(rnorm(12 , 0 , 15))
+data <- data.frame(specie,condition,value)
+data
 ```
