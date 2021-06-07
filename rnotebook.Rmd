@@ -177,3 +177,17 @@ happy.covid <- happiness_2021 %>% inner_join(covid2020_filtered, by = c("Country
 
 summary(happy.covid)
 ```
+```{r}
+cp <- ggplot(happy.covid, aes(total_deaths, Ladder.score)) 
+cp + geom_point()
+```
+```{r}
+#newdata <- mydata[ which(mydata$gender=='F'& mydata$age > 65), ]
+#happiness_na <- happiness[which(happiness$Country=='Canada')]
+happiness_na <- subset(happiness, Country == "Canada" | Country == "United States" | Country =="Mexico",
+select=c(Country, Year, Happiness.Score, Happiness.Rank))
+lp <- ggplot(happiness_na, aes(Year, Happiness.Score, group=Country)) + geom_line(aes(color=Country))
+lp
+llp <- ggplot(happiness_na, aes(Year, Happiness.Rank, group=Country)) + geom_line(aes(color=Country))
+llp
+```
