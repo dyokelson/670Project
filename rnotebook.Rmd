@@ -224,15 +224,7 @@ happy.covid$lm.pred.score = lm.pred.score
 
 summary(happy.covid[, 'lm.pred.score'])
 
-<<<<<<< HEAD
 lm.pred.country.score <- happy.covid[, c("Country.name", "lm.pred.score")]
 lm.pred.rank = lm.pred.country.score[order(-lm.pred.score),]
 lm.pred.rank
 ```
-=======
-pred.country.score <- happy.covid[, c("Country.name", "pred.score")]
-pred.rank = pred.country.score[order(-pred.score),]
-pred.rank
-```
-
->>>>>>> 5fe402891ffe4d7d14de65f4826dbc5e30b8c7a7
