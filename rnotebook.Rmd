@@ -242,3 +242,30 @@ glm.pred.rank = glm.pred.country.score[order(-glm.pred.score),]
 glm.pred.rank
 
 ```
+```{r}
+
+actual <- subset(happy.covid, select=c(Country.name, Ladder.score ))
+colnames(actual)[2] <- "Score"
+actual <- actual[order(actual$Score),]
+actual$Rank <- 1:nrow(actual)
+
+predicted <- subset(happy.covid, select=c(Country.name, lm.pred.score))
+colnames(predicted)[2] <- "Pred_Score"
+predicted <- predicted[order(predicted$Pred_Score),]
+predicted$Pred_Rank <- 1:nrow(predicted)
+
+results <- actual %>% inner_join(predicted, by = "Country.name")
+
+# ggplot(NULL, aes(Rank, Country.name, group=Country.name)) +   
+#  geom_point(data = actual, col = "red") +
+#  geom_point(data = predicted, col = "blue")
+
+# A few constants
+#actualColor <- "#69b3a2"
+#predictedColor <- rgb(0.2, 0.6, 0.9, 1)
+
+# ggplot(results, aes(x=Country.name)) +
+# geom_point( aes(y=Rank), size=2, color="blue") + 
+# geom_point( aes(y=Pred_Rank), size=2, color="red") +
+# scale_y_continuous(name = "Rank", sec.axis = sec_axis(name="Rank")) +theme_ipsum()
+```
