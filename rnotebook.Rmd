@@ -182,7 +182,7 @@ dp + geom_point()
 # merge happiness 2021 table with covid 2020 table using inner join
 happy.covid <- happiness_2021 %>% inner_join(covid2020_filtered, by = c("Country.name" = "location"))
 
-summary(happy.covid)
+summary(happy.covid[, c("Ladder.score", "Logged.GDP.per.capita", "Healthy.life.expectancy", "Freedom.to.make.life.choices", "total_cases", "total_deaths")])
 ```
 
 ```{r}
