@@ -204,12 +204,12 @@ Total covid cases and total deaths don't seem to affect the happiniess (Ladder) 
 ```{r}
 # predict happiness scores of 2021 using the models trained on previous years' data
 data.2021 <- data.frame(GDP.per.capita=Logged.GDP.per.capita, Social.support = Social.support, Healthy.life.expectancy = Healthy.life.expectancy, Freedom=Freedom.to.make.life.choices)
-pred.score = predict(lm.score.2, data.2021)
-happy.covid$pred.score = pred.score
+lm.pred.score = predict(lm.score.2, data.2021)
+happy.covid$lm.pred.score = lm.pred.score
 
-summary(happy.covid[, 'pred.score'])
+summary(happy.covid[, 'lm.pred.score'])
 
-pred.country.score <- happy.covid[, c("Country.name", "pred.score")]
-pred.rank = pred.country.score[order(-pred.score),]
-pred.rank
+lm.pred.country.score <- happy.covid[, c("Country.name", "lm.pred.score")]
+lm.pred.rank = lm.pred.country.score[order(-lm.pred.score),]
+lm.pred.rank
 ```
