@@ -119,6 +119,13 @@ lm.score.2 = lm(Happiness.Score~ GDP.per.capita + Social.support + Healthy.life.
 summary(lm.score.2)
 # plot predictions and residuals
 plot(predict(lm.score.2), residuals(lm.score.2))
+
+
+# fit a linear model with significant predictors in response to happiness rank. 
+lm.rank.2 = lm(Happiness.Rank~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom, data = happiness)
+summary(lm.rank.2)
+# plot predictions and residuals
+plot(predict(lm.rank.2), residuals(lm.rank.2))
 ```
 Results of linear model: 
 1. Generosity and Perceptions of corruption are the least significant predictors.
@@ -177,6 +184,7 @@ happy.covid <- happiness_2021 %>% inner_join(covid2020_filtered, by = c("Country
 
 summary(happy.covid)
 ```
+<<<<<<< HEAD
 ```{r}
 cp <- ggplot(happy.covid, aes(total_deaths, Ladder.score)) 
 cp + geom_point()
@@ -191,3 +199,34 @@ lp
 llp <- ggplot(happiness_na, aes(Year, Happiness.Rank, group=Country)) + geom_line(aes(color=Country))
 llp
 ```
+=======
+
+
+```{r}
+attach(happy.covid)
+# fit a linear model with happiness 2021 data only featuring significant predictors in response to happiness score.
+lm.score.wo.covid = lm(Ladder.score ~ Logged.GDP.per.capita + Social.support + Healthy.life.expectancy+ Freedom.to.make.life.choices + Generosity + Perceptions.of.corruption, data=happy.covid)
+summary(lm.score.wo.covid)
+
+
+# fit a linear model with both happiness and covid data with significant predictors in response to happiness score.
+lm.score.w.covid = lm(Ladder.score ~ Logged.GDP.per.capita + Social.support + Healthy.life.expectancy+ Freedom.to.make.life.choices + Generosity + Perceptions.of.corruption + total_cases + total_deaths, data=happy.covid)
+summary(lm.score.w.covid)
+```
+
+Results from the above two models:
+Total covid cases and total deaths don't seem to affect the happiniess (Ladder) score much.
+
+```{r}
+# predict happiness scores of 2021 using the models trained on previous years' data
+data.2021 <- data.frame(GDP.per.capita=Logged.GDP.per.capita, Social.support = Social.support, Healthy.life.expectancy = Healthy.life.expectancy, Freedom=Freedom.to.make.life.choices)
+pred.score = predict(lm.score.2, data.2021)
+happy.covid$pred.score = pred.score
+
+summary(happy.covid[, 'pred.score'])
+
+pred.country.score <- happy.covid[, c("Country.name", "pred.score")]
+pred.rank = pred.country.score[order(-pred.score),]
+pred.rank
+```
+>>>>>>> dabc70adf4da2ef7e68a0ed8f141bd2c516a9a1b
