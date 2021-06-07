@@ -184,7 +184,7 @@ happy.covid <- happiness_2021 %>% inner_join(covid2020_filtered, by = c("Country
 
 summary(happy.covid)
 ```
-<<<<<<< HEAD
+
 ```{r}
 cp <- ggplot(happy.covid, aes(total_deaths, Ladder.score)) 
 cp + geom_point()
@@ -199,7 +199,6 @@ lp
 llp <- ggplot(happiness_na, aes(Year, Happiness.Rank, group=Country)) + geom_line(aes(color=Country))
 llp
 ```
-=======
 
 
 ```{r}
@@ -229,4 +228,4 @@ pred.country.score <- happy.covid[, c("Country.name", "pred.score")]
 pred.rank = pred.country.score[order(-pred.score),]
 pred.rank
 ```
->>>>>>> dabc70adf4da2ef7e68a0ed8f141bd2c516a9a1b
+
