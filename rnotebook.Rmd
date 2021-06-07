@@ -107,30 +107,31 @@ plot(predict(lm.score.1), residuals(lm.score.1))
 ```
 ```{r}
 # check linear statistical significance of all predictors in response to happiness rank. 
-lm.rank = lm(Happiness.Rank~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
-summary(lm.rank)
+lm.rank.1 = lm(Happiness.Rank~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
+summary(lm.rank.1)
 # plot predictions and residuals
-plot(predict(lm.rank), residuals(lm.rank))
+plot(predict(lm.rank.1), residuals(lm.rank.1))
 ```
 
 ```{r}
 # fit a linear model with significant predictors in response to happiness score. 
-lm.score.2 = lm(Happiness.Score~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom, data = happiness)
+lm.score.2 = lm(Happiness.Score~ GDP.per.capita + Healthy.life.expectancy + Freedom, data = happiness)
 summary(lm.score.2)
 # plot predictions and residuals
 plot(predict(lm.score.2), residuals(lm.score.2))
 
 
 # fit a linear model with significant predictors in response to happiness rank. 
-lm.rank.2 = lm(Happiness.Rank~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom, data = happiness)
+lm.rank.2 = lm(Happiness.Rank~ GDP.per.capita + Healthy.life.expectancy + Freedom, data = happiness)
 summary(lm.rank.2)
 # plot predictions and residuals
 plot(predict(lm.rank.2), residuals(lm.rank.2))
 ```
 Results of linear model: 
 1. Generosity and Perceptions of corruption are the least significant predictors.
-2. The plot of lm.rank is the opposite of lm.score.1.
-3. By removing generosity and perceptions of corruption, we get similar R-squared values but a higher F-statistics.
+2. Social support has been removed as not all previous data include such information.
+3. The plot of lm.rank.1 is the opposite of lm.score.1.
+4. By removing generosity and perceptions of corruption, we get similar R-squared values but a higher F-statistics.
 
 
 ```{r}
@@ -159,8 +160,7 @@ set.seed(8)
 # fit a linear model with multiple predictors in response to happiness score using K-fold cross validation.
 glm.score.multi = glm(Happiness.Score ~ GDP.per.capita +  Healthy.life.expectancy + Freedom, data = happiness)
 cv.error.5.multi =cv.glm(happiness, glm.score.multi, K=5)
-#cv.error = cv.glm(happiness, glm.score.multi, K=5)
-cv.error.5.multi
+cv.error.5.multi$delta
 ```
 ```{r}
 names(covid2020_filtered)
@@ -218,13 +218,27 @@ Total covid cases and total deaths don't seem to affect the happiniess (Ladder) 
 
 ```{r}
 # predict happiness scores of 2021 using the models trained on previous years' data
-data.2021 <- data.frame(GDP.per.capita=Logged.GDP.per.capita, Social.support = Social.support, Healthy.life.expectancy = Healthy.life.expectancy, Freedom=Freedom.to.make.life.choices)
-lm.pred.score = predict(lm.score.2, data.2021)
+data.2021 <- data.frame(GDP.per.capita=Logged.GDP.per.capita, #Social.support = Social.support,
+                        Healthy.life.expectancy = Healthy.life.expectancy, Freedom=Freedom.to.make.life.choices)
+lm.pred.score = predict(lm.score.2, data.2021) # no cv
+glm.pred.score = predict(glm.score.multi, data.2021) # with cv
+
+# append pred score to the dataframe
 happy.covid$lm.pred.score = lm.pred.score
+happy.covid$glm.pred.score = glm.pred.score
 
-summary(happy.covid[, 'lm.pred.score'])
+# pred statistics
+summary(happy.covid[, c('lm.pred.score', 'glm.pred.score')])
 
+# pred rank per linear model without cv
 lm.pred.country.score <- happy.covid[, c("Country.name", "lm.pred.score")]
 lm.pred.rank = lm.pred.country.score[order(-lm.pred.score),]
 lm.pred.rank
+
+
+# pred rank per glm model with cv
+glm.pred.country.score <- happy.covid[, c("Country.name", "glm.pred.score")]
+glm.pred.rank = glm.pred.country.score[order(-glm.pred.score),]
+glm.pred.rank
+
 ```
