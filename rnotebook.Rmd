@@ -1,6 +1,8 @@
 ---
 title: "670 Project - Happiness in the Time of Covid"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 We found some interesting datasets on Kaggle - namely the World Happiness Reports from2015-2019, and 2021. They contain information like how GDP and life expectancy contributeto a "happiness rating" (based on the Gallup World Poll). We also have some COVID-19 datafor all countries which includes cases per day, deaths and cumulative counts over 2020.
 
@@ -32,7 +34,7 @@ covid2020_filtered <- read.csv("data/covid2020-filtered.csv", header = T, na.str
 ```
 
 # 1. Data Preprocessing
-### Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, "Country" vs "Country or Region" or "Score" vs. "Happiness Score"). We started renaming the columns programatically but it was very tedious code to write and look at so we took it out of the notebook, we show how we changed the country column name just as an example.
+Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, "Country" vs "Country or Region" or "Score" vs. "Happiness Score"). We started renaming the columns programatically but it was very tedious code to write and look at so we took it out of the notebook, we show how we changed the country column name just as an example.
 
 ##### Rename "Country.or.region" to "Country" in 2018/2019 so we can join with the rest.
 ```{r}
@@ -156,8 +158,8 @@ cv.error.10.free$delta
 ```
 
 #### Fun facts about the 1-1 relationships: 
-* GDP per capita seems to have a clearer correlation with the happiness score, then healthy life expectancy, then freedom. 
-
+* When we look at these variables on their own, the GDP per capita seems to be the best predictor of the happiness score, then healthy life expectancy, then freedom. 
+* We'll try using all of the predictors to see if we can get improvement.
 
 
 ##### Fit a linear model with multiple predictors in response to happiness score using K-fold cross validation.
@@ -254,7 +256,7 @@ geom_point( aes(y=lm_Rank), size=4, shape=3) +
 geom_point( aes(y=glm_Rank), size=4, shape=4) +
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
-### Let's look at the US, Brazil, and India. Three countries that had relatively devastating COVID rates compared to select countries. 
+### Let's look at the US, Brazil, India, Italy, and China. Countries that had either early or late COVID rates compared to select countries. 
 ```{r}
 actual <- subset(happy.covid, select=c(Country.name, Ladder.score ))
 colnames(actual)[2] <- "Score"
