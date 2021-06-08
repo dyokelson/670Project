@@ -32,9 +32,9 @@ covid2020_filtered <- read.csv("data/covid2020-filtered.csv", header = T, na.str
 ```
 
 # 1. Data Preprocessing
-### Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, "Country" vs "Country or Region" or "Score" vs. "Happiness Score" we started doing this programatically but it was pretty tedious code to write and look at so we wanted to take it out of the notebook, we left one example, changing the country column name just as an example )
+Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, "Country" vs "Country or Region" or "Score" vs. "Happiness Score"). We started renaming the columns programatically but it was very tedious code to write and look at so we took it out of the notebook, we show how we changed the country column name just as an example.
 
-### Rename "Country.or.region" to "Country" in 2018/2019 so we can join with the rest.
+##### Rename "Country.or.region" to "Country" in 2018/2019 so we can join with the rest.
 ```{r}
 colnames(happiness_2018)[2] <- "Country"
 names(happiness_2018)
@@ -45,7 +45,7 @@ happiness_2015 = subset(happiness_2015, select=-c(Region,Standard.Error,Dystopia
 happiness_2016 = subset(happiness_2016,select=-c(Region,Lower.Confidence.Interval,Upper.Confidence.Interval,Dystopia.Residual))
 happiness_2017 = subset(happiness_2017, select=-c(Whisker.high,Whisker.low,Dystopia.Residual))
 ```
-### Add a "Year" Column to each to keep track before merging.
+##### Add a "Year" Column to each to keep track before merging.
 ```{r}
 happiness_2015$Year=2015
 happiness_2016$Year=2016
@@ -54,53 +54,67 @@ happiness_2018$Year=2018
 happiness_2019$Year=2019
 ```
 
-### Combine 2015-2019 happiness data into one dataframe
+##### Combine 2015-2019 happiness data into one dataframe
 ```{r}
 happiness = smartbind(happiness_2015, happiness_2016, happiness_2017, happiness_2018, happiness_2019)
 dim(happiness)
 names(happiness)
 ```
+#### Dataset Explanation:
+* There are six factors – economic production(GDP per capita), social support, life expectancy(Healthy life expectancy), freedom, absence of corruption(Perceptions of corruption), and generosity – contributing to the calculation of the happiness score of each country.
+
+* We filtered out the total COVID-19 cases and total COVID-19 deaths by December 31st, 2020 of each country.
+
 # 2. Models
-### check linear statistical significance of all predictors in response to happiness score.
-### plot predictions and residuals
+
+### Models and Analysis on Previous Years' Data
+#### Q: What factors seem to contribute to a "happier" country?
+##### Check linear statistical significance of all predictors in response to happiness score.
 ```{r}
 lm.score.1 = lm(Happiness.Score~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
 summary(lm.score.1)
 
+# Plot predictions and residuals
 plot(predict(lm.score.1), residuals(lm.score.1))
 ```
-### check linear statistical significance of all predictors in response to happiness rank. 
-### plot predictions and residuals
+##### Check linear statistical significance of all predictors in response to happiness rank. 
+
 ```{r}
 lm.rank.1 = lm(Happiness.Rank~ GDP.per.capita + Social.support + Healthy.life.expectancy + Freedom + Generosity + Perceptions.of.corruption, data = happiness)
 summary(lm.rank.1)
 
+# Plot predictions and residuals
 plot(predict(lm.rank.1), residuals(lm.rank.1))
 ```
-### fit a linear model with significant predictors in response to happiness score. 
-### plot predictions and residuals
-### fit a linear model with significant predictors in response to happiness rank.
-### plot predictions and residuals
+##### Fit a linear model with significant predictors in response to happiness score. 
+
 ```{r}
 
 lm.score.2 = lm(Happiness.Score~ GDP.per.capita + Healthy.life.expectancy + Freedom, data = happiness)
 summary(lm.score.2)
 
+# Plot predictions and residuals
 plot(predict(lm.score.2), residuals(lm.score.2))
+```
 
+##### Fit a linear model with significant predictors in response to happiness rank.
+
+```{r}
  
 lm.rank.2 = lm(Happiness.Rank~ GDP.per.capita + Healthy.life.expectancy + Freedom, data = happiness)
 summary(lm.rank.2)
 
+# Plot predictions and residuals
 plot(predict(lm.rank.2), residuals(lm.rank.2))
 ```
-## Results of linear model: 
+#### Results of linear models: 
+* GDP per capita, Healthy life expectancy, Social support and Freedom seem to contribute the most to a "happier" country. 
 * Generosity and Perceptions of corruption are the least significant predictors.
-* Social support has been removed as not all previous data include such information.
-* The plot of lm.rank.1 is the opposite of lm.score.1.
+* However, Social support has been removed as not all previous data include such information.
+* The plot of the rank models are the opposite of the score models.
 * By removing generosity and perceptions of corruption, we get similar R-squared values but a higher F-statistics.
 
-### fit a linear model with GDP.per.capita in response to happiness score using K-fold cross validation.
+##### Fit a linear model with GDP.per.capita in response to happiness score using K-fold cross validation.
 ```{r}
 library(boot)
 set.seed(1)
@@ -110,7 +124,17 @@ cv.error.10 =cv.glm(happiness, glm.score, K=10)
 cv.error.10$delta
 ```
 
-### fit a linear model with Freedom in response to happiness score using K-fold cross validation.
+
+##### Fit a linear model with Healthy life expectancy in response to happiness score using K-fold cross validation.
+```{r}
+
+glm.score.life = glm(Happiness.Score~Healthy.life.expectancy, data = happiness)
+cv.error.10.life =cv.glm(happiness, glm.score.life, K=10)
+cv.error.10.life$delta
+```
+
+
+##### Fit a linear model with Freedom in response to happiness score using K-fold cross validation.
 ```{r}
 
 glm.score.free = glm(Happiness.Score~Freedom, data = happiness)
@@ -118,8 +142,12 @@ cv.error.10.free =cv.glm(happiness, glm.score.free, K=10)
 cv.error.10.free$delta
 ```
 
+#### Fun facts about the 1-1 relationships: 
+* GDP per capita seems to have a clearer correlation with the happiness score, then healthy life expectancy, then freedom. 
 
-### fit a linear model with multiple predictors in response to happiness score using K-fold cross validation.
+
+
+##### Fit a linear model with multiple predictors in response to happiness score using K-fold cross validation.
 ```{r}
 set.seed(8)
 
@@ -128,17 +156,23 @@ cv.error.5.multi =cv.glm(happiness, glm.score.multi, K=5)
 cv.error.5.multi$delta
 ```
 
+#### The cross validation error improved!
 
-### merge happiness 2021 table with covid 2020 table using inner join
+
+### Models and Predictions on Data of Year 2021
+#### Q: Does the impact of COVID-19 seem to have an effect on the happiness rating?
+
+##### Merge happiness 2021 table with covid 2020 table using inner join.
 ```{r}
 
 happy.covid <- happiness_2021 %>% inner_join(covid2020_filtered, by = c("Country.name" = "location"))
 
+# statistics
 summary(happy.covid[, c("Ladder.score", "Logged.GDP.per.capita", "Healthy.life.expectancy", "Freedom.to.make.life.choices", "total_cases", "total_deaths")])
 ```
 
 
-### fit a linear model with happiness 2021 data only featuring significant predictors in response to happiness score.
+##### Fit a linear model with happiness 2021 data only featuring significant predictors in response to happiness score.
 ```{r}
 attach(happy.covid)
 
@@ -146,20 +180,21 @@ lm.score.wo.covid = lm(Ladder.score ~ Logged.GDP.per.capita + Social.support + H
 summary(lm.score.wo.covid)
 ```
 
-# fit a linear model with both happiness and covid data with significant predictors in response to happiness score.
+##### Fit a linear model with both happiness and covid data with significant predictors in response to happiness score.
 ```{r}
 lm.score.w.covid = lm(Ladder.score ~ Logged.GDP.per.capita + Social.support + Healthy.life.expectancy+ Freedom.to.make.life.choices + Generosity + Perceptions.of.corruption + total_cases + total_deaths, data=happy.covid)
 summary(lm.score.w.covid)
 ```
 
-## Results from the above two models:
+#### Results from the above two models:
 * Total covid cases and total deaths don't seem to affect the happiniess (Ladder) score much.
 
-### predict happiness scores of 2021 using the models trained on previous years' data
+##### Predict happiness scores of 2021 using the models trained on previous years' data.
 ```{r}
+# prepare test data
 data.2021 <- data.frame(GDP.per.capita=Logged.GDP.per.capita,Healthy.life.expectancy = Healthy.life.expectancy, Freedom=Freedom.to.make.life.choices)
-lm.pred.score = predict(lm.score.2, data.2021) # no cv
-glm.pred.score = predict(glm.score.multi, data.2021) # with cv
+lm.pred.score = predict(lm.score.2, data.2021) # without cross validation
+glm.pred.score = predict(glm.score.multi, data.2021) # with cross validation
 
 # append pred score to the dataframe
 happy.covid$lm.pred.score = lm.pred.score
@@ -169,14 +204,14 @@ happy.covid$glm.pred.score = glm.pred.score
 summary(happy.covid[, c('lm.pred.score', 'glm.pred.score')])
 ```
 
-# pred rank per linear model without cv
+##### pred rank per linear model without cv
 ```{r}
 lm.pred.country.score <- happy.covid[, c("Country.name", "lm.pred.score")]
 lm.pred.rank = lm.pred.country.score[order(-lm.pred.score),]
 lm.pred.rank
 ```
 
-# pred rank per glm model with cv
+##### pred rank per glm model with cv
 ```{r}
 glm.pred.country.score <- happy.covid[, c("Country.name", "glm.pred.score")]
 glm.pred.rank = glm.pred.country.score[order(-glm.pred.score),]
@@ -184,7 +219,7 @@ glm.pred.rank
 
 ```
 
-## Plot Predicted vs. Actual
+### Plot Predicted vs. Actual
 ```{r}
 actual <- subset(happy.covid, select=c(Country.name, Ladder.score ))
 colnames(actual)[2] <- "Score"
@@ -209,7 +244,9 @@ geom_point( aes(y=lm_Rank), size=4, shape=3) +
 geom_point( aes(y=glm_Rank), size=4, shape=4) +
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
-# Other Plots and Analysis
+### Other Plots and Analysis
+
+#### Q: How did the total deaths caused by COVID-19 correlate with the GDP of a country?
 ```{r}
 p <- ggplot(covid2020_filtered, aes(gdp_per_capita, total_deaths)) 
 p + geom_point()
@@ -218,22 +255,24 @@ p + geom_point()
 p + geom_bin2d() + scale_fill_gradient(low="green", high="red")
 ```
 
-
+#### Q: How did COVID-19 affect happiness ratings in developed countries compared to developing countries?
 ```{r}
 cp <- ggplot(happy.covid, aes(total_deaths, Ladder.score)) 
 cp + geom_point()
 ```
 
+##### Happiness score in Canada, United States, and Mexico from 2015 to 2019.
 ```{r}
 happiness_na <- subset(happiness, Country == "Canada" | Country == "United States" | Country =="Mexico",
 select=c(Country, Year, Happiness.Score, Happiness.Rank))
 ggplot(happiness_na, aes(Year, Happiness.Score, group=Country)) + geom_line(aes(color=Country))
 ```
 
+##### Happiness rank of Canada, United States, and Mexico from 2015 to 2019.
 ```{r}
 ggplot(happiness_na, aes(Year, Happiness.Rank, group=Country)) + geom_line(aes(color=Country))
 ```
-
+##### Plot total COVID-19 cases and total deaths of each continent.
 ```{r}
 dp <- ggplot(covid2020_filtered, aes(total_cases, total_deaths, colour = continent)) 
 dp + geom_point()
@@ -242,7 +281,7 @@ dp + geom_point()
 # Discussion
 * What factors seem to contribute to a "happier" country?
 * Does the impact of COVID-19 seem to have an effect on the happiness rating?
-* Does the impact of COVID-19 seem to have an ffect on the amount certain factors contribute to happiness ratings?
+* Does the impact of COVID-19 seem to have an effect on the amount certain factors contribute to happiness ratings?
 * Do countries that were heavily impacted by COVID-19 have a lower happiness rating in 2021 compared to 2019?
 * How did COVID-19 affect happiness ratings in developed countries compared to developing countries?
 * Can we use additional data from previous years (2015-2019) to predict happiness ratings for 2021 and compare these with the actual?
