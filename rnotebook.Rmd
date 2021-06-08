@@ -204,14 +204,14 @@ happy.covid$glm.pred.score = glm.pred.score
 summary(happy.covid[, c('lm.pred.score', 'glm.pred.score')])
 ```
 
-##### pred rank per linear model without cv
+##### Predicted rank per linear model without cv
 ```{r}
 lm.pred.country.score <- happy.covid[, c("Country.name", "lm.pred.score")]
 lm.pred.rank = lm.pred.country.score[order(-lm.pred.score),]
 lm.pred.rank
 ```
 
-##### pred rank per glm model with cv
+##### Predicted rank per glm model with cv
 ```{r}
 glm.pred.country.score <- happy.covid[, c("Country.name", "glm.pred.score")]
 glm.pred.rank = glm.pred.country.score[order(-glm.pred.score),]
@@ -261,7 +261,7 @@ cp <- ggplot(happy.covid, aes(total_deaths, Ladder.score))
 cp + geom_point()
 ```
 
-##### Happiness score in Canada, United States, and Mexico from 2015 to 2019.
+##### Happiness score of Canada, United States, and Mexico from 2015 to 2019.
 ```{r}
 happiness_na <- subset(happiness, Country == "Canada" | Country == "United States" | Country =="Mexico",
 select=c(Country, Year, Happiness.Score, Happiness.Rank))
