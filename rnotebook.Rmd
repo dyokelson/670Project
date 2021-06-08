@@ -32,7 +32,7 @@ covid2020_filtered <- read.csv("data/covid2020-filtered.csv", header = T, na.str
 ```
 
 # 1. Data Preprocessing
-Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, "Country" vs "Country or Region" or "Score" vs. "Happiness Score"). We started renaming the columns programatically but it was very tedious code to write and look at so we took it out of the notebook, we show how we changed the country column name just as an example.
+### Manually, once we loaded in the data we noticed many column name mismatches and had to rename quite a few (for example, "Country" vs "Country or Region" or "Score" vs. "Happiness Score"). We started renaming the columns programatically but it was very tedious code to write and look at so we took it out of the notebook, we show how we changed the country column name just as an example.
 
 ##### Rename "Country.or.region" to "Country" in 2018/2019 so we can join with the rest.
 ```{r}
@@ -65,9 +65,22 @@ names(happiness)
 
 * We filtered out the total COVID-19 cases and total COVID-19 deaths by December 31st, 2020 of each country.
 
+### A little exploration of the data visually - what do happiness trends look like in the US and neighboring countries?
+##### Happiness score of Canada, United States, and Mexico from 2015 to 2019.
+```{r}
+happiness_na <- subset(happiness, Country == "Canada" | Country == "United States" | Country =="Mexico",
+select=c(Country, Year, Happiness.Score, Happiness.Rank))
+ggplot(happiness_na, aes(Year, Happiness.Score, group=Country)) + geom_line(aes(color=Country))
+```
+
+##### Happiness rank of Canada, United States, and Mexico from 2015 to 2019.
+```{r}
+ggplot(happiness_na, aes(Year, Happiness.Rank, group=Country)) + geom_line(aes(color=Country))
+```
+
 # 2. Models
 
-### Models and Analysis on Previous Years' Data
+### Models and Analysis on 2015-2019 Data (before COVID)
 #### Q: What factors seem to contribute to a "happier" country?
 ##### Check linear statistical significance of all predictors in response to happiness score.
 ```{r}
@@ -149,17 +162,15 @@ cv.error.10.free$delta
 
 ##### Fit a linear model with multiple predictors in response to happiness score using K-fold cross validation.
 ```{r}
-set.seed(8)
-
 glm.score.multi = glm(Happiness.Score ~ GDP.per.capita +  Healthy.life.expectancy + Freedom, data = happiness)
-cv.error.5.multi =cv.glm(happiness, glm.score.multi, K=5)
-cv.error.5.multi$delta
+cv.error.10.multi =cv.glm(happiness, glm.score.multi, K=10)
+cv.error.10.multi$delta
 ```
 
 #### The cross validation error improved!
 
 
-### Models and Predictions on Data of Year 2021
+### Models and Predictions for 2021, once COVID-19 was a thing.
 #### Q: Does the impact of COVID-19 seem to have an effect on the happiness rating?
 
 ##### Merge happiness 2021 table with covid 2020 table using inner join.
@@ -174,8 +185,6 @@ summary(happy.covid[, c("Ladder.score", "Logged.GDP.per.capita", "Healthy.life.e
 
 ##### Fit a linear model with happiness 2021 data only featuring significant predictors in response to happiness score.
 ```{r}
-attach(happy.covid)
-
 lm.score.wo.covid = lm(Ladder.score ~ Logged.GDP.per.capita + Social.support + Healthy.life.expectancy+ Freedom.to.make.life.choices + Generosity + Perceptions.of.corruption, data=happy.covid)
 summary(lm.score.wo.covid)
 ```
@@ -187,12 +196,12 @@ summary(lm.score.w.covid)
 ```
 
 #### Results from the above two models:
-* Total covid cases and total deaths don't seem to affect the happiniess (Ladder) score much.
+* Total covid cases and total deaths don't seem to affect the happiness (Ladder) score much.
 
 ##### Predict happiness scores of 2021 using the models trained on previous years' data.
 ```{r}
 # prepare test data
-data.2021 <- data.frame(GDP.per.capita=Logged.GDP.per.capita,Healthy.life.expectancy = Healthy.life.expectancy, Freedom=Freedom.to.make.life.choices)
+data.2021 <- data.frame(GDP.per.capita=happy.covid$Logged.GDP.per.capita,Healthy.life.expectancy = happy.covid$Healthy.life.expectancy, Freedom=happy.covid$Freedom.to.make.life.choices)
 lm.pred.score = predict(lm.score.2, data.2021) # without cross validation
 glm.pred.score = predict(glm.score.multi, data.2021) # with cross validation
 
@@ -219,7 +228,8 @@ glm.pred.rank
 
 ```
 
-### Plot Predicted vs. Actual
+### Plot Predicted vs. Actual for top 15 happiest countries
+We spent hours trying to get this legend right...but the + is for predictions by the linear model and the x is for predictions by the logistic model, the o is for the actual ranking. 
 ```{r}
 actual <- subset(happy.covid, select=c(Country.name, Ladder.score ))
 colnames(actual)[2] <- "Score"
@@ -244,44 +254,54 @@ geom_point( aes(y=lm_Rank), size=4, shape=3) +
 geom_point( aes(y=glm_Rank), size=4, shape=4) +
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
-### Other Plots and Analysis
+### Let's look at the US, Brazil, and India. Three countries that had relatively devastating COVID rates compared to select countries. 
+```{r}
+actual <- subset(happy.covid, select=c(Country.name, Ladder.score ))
+colnames(actual)[2] <- "Score"
+actual <- actual[order(-actual$Score),]
+actual$Rank <- 1:nrow(actual)
+
+lm_predicted <- subset(happy.covid, select=c(Country.name, lm.pred.score))
+lm_predicted <- lm_predicted[order(-lm_predicted$lm.pred.score),]
+lm_predicted$lm_Rank <- 1:nrow(lm_predicted)
+
+glm_predicted <- subset(happy.covid, select=c(Country.name, glm.pred.score))
+glm_predicted <- glm_predicted[order(-glm_predicted$glm.pred.score),]
+glm_predicted$glm_Rank <- 1:nrow(glm_predicted)
+
+results <- actual %>% inner_join(lm_predicted, by = "Country.name")
+results <- results %>% inner_join(glm_predicted, by = "Country.name")
+results <- subset(results, Country.name == "Brazil" | Country.name == "United States" | Country.name =="India" | Country.name =="Canada" | Country.name =="China" | Country.name=="Italy", select=c(Country.name, Rank, lm_Rank, glm_Rank))
+
+ggplot(results, aes(x=Country.name, colour=Country.name)) +
+geom_point( aes(y=Rank), size=4) +
+geom_point( aes(y=lm_Rank), size=4, shape=3) +
+geom_point( aes(y=glm_Rank), size=4, shape=4) +
+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+## Other Plots and Analysis
 
 #### Q: How did the total deaths caused by COVID-19 correlate with the GDP of a country?
 ```{r}
 p <- ggplot(covid2020_filtered, aes(gdp_per_capita, total_deaths)) 
-p + geom_point()
-# p + geom_point() + scale_x_continuous(trans='log2') +
-#   scale_y_continuous(trans='log2')
 p + geom_bin2d() + scale_fill_gradient(low="green", high="red")
 ```
 
 #### Q: How did COVID-19 affect happiness ratings in developed countries compared to developing countries?
 ```{r}
-cp <- ggplot(happy.covid, aes(total_deaths, Ladder.score)) 
-cp + geom_point()
+cp <- ggplot(happy.covid, aes(total_deaths, Ladder.score, colour=continent)) 
+cp + geom_point() + 
+  labs(x="GDP", y="Happiness Score")
 ```
-
-##### Happiness score of Canada, United States, and Mexico from 2015 to 2019.
-```{r}
-happiness_na <- subset(happiness, Country == "Canada" | Country == "United States" | Country =="Mexico",
-select=c(Country, Year, Happiness.Score, Happiness.Rank))
-ggplot(happiness_na, aes(Year, Happiness.Score, group=Country)) + geom_line(aes(color=Country))
-```
-
-##### Happiness rank of Canada, United States, and Mexico from 2015 to 2019.
-```{r}
-ggplot(happiness_na, aes(Year, Happiness.Rank, group=Country)) + geom_line(aes(color=Country))
-```
-##### Plot total COVID-19 cases and total deaths of each continent.
+##### Plot total COVID-19 cases and total deaths of per country, grouped by continent.
 ```{r}
 dp <- ggplot(covid2020_filtered, aes(total_cases, total_deaths, colour = continent)) 
 dp + geom_point()
 ```
 
-# Discussion
-* What factors seem to contribute to a "happier" country?
-* Does the impact of COVID-19 seem to have an effect on the happiness rating?
-* Does the impact of COVID-19 seem to have an effect on the amount certain factors contribute to happiness ratings?
-* Do countries that were heavily impacted by COVID-19 have a lower happiness rating in 2021 compared to 2019?
-* How did COVID-19 affect happiness ratings in developed countries compared to developing countries?
-* Can we use additional data from previous years (2015-2019) to predict happiness ratings for 2021 and compare these with the actual?
+
+
+# Conclusion
+We were surprised by how little it seemed COVID-19 impacted countries or not. For example, in the US, and Brazil ranking seemed to actually improve over the predicted. India seemed to fare a little worse in 2021 than the trend projected. Italy and Canada had predicted and actual values much closer together. The top 15 countries mostly turned out happier than expected. 
+Our models are not accurate enough to make these predictions very confidently. However, this does give us the inkling of a theory that we would like to explore in future projects. Do countries with a higher contribution of healthcare to their happiness score fare better after a pandemic? How did countries with different healthcare systems (socialized medicine vs private, etc.)? Knowing the answers to some of these questions could have a large impact on how countries overhaul and form their healthcare systems in the coming years. 
