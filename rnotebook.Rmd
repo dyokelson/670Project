@@ -47,6 +47,7 @@ happiness_2015 = subset(happiness_2015, select=-c(Region,Standard.Error,Dystopia
 happiness_2016 = subset(happiness_2016,select=-c(Region,Lower.Confidence.Interval,Upper.Confidence.Interval,Dystopia.Residual))
 happiness_2017 = subset(happiness_2017, select=-c(Whisker.high,Whisker.low,Dystopia.Residual))
 ```
+
 ##### Add a "Year" Column to each to keep track before merging.
 ```{r}
 happiness_2015$Year=2015
@@ -62,6 +63,7 @@ happiness = smartbind(happiness_2015, happiness_2016, happiness_2017, happiness_
 dim(happiness)
 names(happiness)
 ```
+
 #### Dataset Explanation:
 * There are six factors – economic production(GDP per capita), social support, life expectancy(Healthy life expectancy), freedom, absence of corruption(Perceptions of corruption), and generosity – contributing to the calculation of the happiness score of each country.
 
@@ -92,6 +94,7 @@ summary(lm.score.1)
 # Plot predictions and residuals
 plot(predict(lm.score.1), residuals(lm.score.1))
 ```
+
 ##### Check linear statistical significance of all predictors in response to happiness rank. 
 
 ```{r}
@@ -101,6 +104,7 @@ summary(lm.rank.1)
 # Plot predictions and residuals
 plot(predict(lm.rank.1), residuals(lm.rank.1))
 ```
+
 ##### Fit a linear model with significant predictors in response to happiness score. 
 
 ```{r}
@@ -122,6 +126,7 @@ summary(lm.rank.2)
 # Plot predictions and residuals
 plot(predict(lm.rank.2), residuals(lm.rank.2))
 ```
+
 #### Results of linear models: 
 * GDP per capita, Healthy life expectancy, Social support and Freedom seem to contribute the most to a "happier" country. 
 * Generosity and Perceptions of corruption are the least significant predictors.
@@ -256,6 +261,7 @@ geom_point( aes(y=lm_Rank), size=4, shape=3) +
 geom_point( aes(y=glm_Rank), size=4, shape=4) +
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
+
 ### Let's look at the US, Brazil, India, Italy, and China. Countries that had either early or late COVID rates compared to select countries. 
 ```{r}
 actual <- subset(happy.covid, select=c(Country.name, Ladder.score ))
